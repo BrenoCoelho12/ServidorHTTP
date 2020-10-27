@@ -39,22 +39,34 @@ while True:
     # declaracao da resposta do servidor
     request = request.decode('utf-8').split(" ") #divide a string a partir do espaço
     print(request)
-
+    
     if request[0] == "GET": #se a primeira string for get
 
         path = request[1]
-        if not os.path.exists(path): #caso o caminho não exista não exista
+        if not os.path.exists(path): #caso o caminho não exista 
             print("O arquivo não foi encontrado.")
+            print("Request", '[%s]' % ', '.join(map(str, request)))
             arquivo = open("erro404.html", encoding ="utf-8").read() #abre arquivo e ler
             http_response = """\
     HTTP/1.1 404 Not Found\r\n\r\n
     """ + arquivo
 
         else: #caso o arquivo exista
+            print("Request: ", '[%s]' % ', '.join(map(str, request)))
             arquivo = open("index.html", encoding = "utf-8").read() #abre arquivo e ler
             http_response = """\
         HTTP/1.1 200 OK
         """ + arquivo
+    
+    else:
+        print("Comando desconhecido")
+        arquivo = open("erro400.html", encoding ="utf-8").read() #abre arquivo e ler
+        http_response = """\
+        HTTP/1.1 400 Bad Request\r\n\r\n
+        """ + arquivo
+
+    
+     
 
     # servidor retorna o que foi solicitado pelo cliente (neste caso a resposta e generica)
     client_connection.send(http_response.encode('utf-8'))

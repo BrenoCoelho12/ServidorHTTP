@@ -51,7 +51,7 @@ while True:
     """ + arquivo
 
         else: #caso o arquivo exista
-            arquivo = open(r"index.html", encoding = "utf-8").read() #abre arquivo e ler
+            arquivo = open("index.html", encoding = "utf-8").read() #abre arquivo e ler
             http_response = """\
         HTTP/1.1 200 OK
         """ + arquivo
